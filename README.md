@@ -1,6 +1,26 @@
 # Magic patch
 An extensible tool for extracting windows patches
 
+
+## Install
+
+Initiate vitrual environment for good luck:
+
+~~~shell
+PS S:\tools\windows_patch_extract> python.exe -m venv venv
+PS S:\tools\windows_patch_extract> . venv\Scripts\activate
+(venv) PS S:\tools\windows_patch_extract> 
+~~~
+
+Install from `pyproject.toml` - note that due to the `distutils` dependency the maximum supported Python version is 3.10:
+
+~~~shell
+(venv) PS S:\tools\windows_patch_extract> pip install .
+~~~
+
+The install script creates the `magic-cli` wrapper that should be available in you PATH.
+
+
 ## Usage
 Normal files: Full file doesn't need to apply delta patch
 
@@ -12,7 +32,7 @@ Reverse files: Upated + Reverse  = Base
 
 - List windows product_id
 ~~~shell
-PS S:\tools\windows_patch_extract> py -3 .\magic.py -l
+PS S:\tools\windows_patch_extract> magic-cli -l
 List of products
 {
     "9312": "Windows RT 8.1",
@@ -60,7 +80,7 @@ List of products
 
 - Search for a specific CVE update
 ~~~shell
-PS S:\tools\windows_patch_extract> py -3 .\magic.py -cve CVE-2022-37987 12086
+PS S:\tools\windows_patch_extract> magic-cli -cve CVE-2022-37987 12086
 [!WARNING] product_id doesn't match local machine
 Security update 2022-Oct for CVE-2022-37987 on Windows 11 Version 22H2 for x64-based Systems
 {
@@ -78,7 +98,7 @@ Security update 2022-Oct for CVE-2022-37987 on Windows 11 Version 22H2 for x64-b
 
 - Expand an update file
 ~~~shell
-PS S:\tools\windows_patch_extract> py -3 .\magic.py -expand E:\windows11.0-kb5018427-x64_ba6a752015a4115e688beea33f2afe8c55156b55.cab
+PS S:\tools\windows_patch_extract> magic-cli -expand E:\windows11.0-kb5018427-x64_ba6a752015a4115e688beea33f2afe8c55156b55.cab
 create E:\expand
 [INFO] Running expand.exe -F:* E:\windows11.0-kb5018427-x64_ba6a752015a4115e688beea33f2afe8c55156b55.cab E:\expand
 [INFO] Running expand.exe -F:* E:\expand\DesktopDeployment.cab E:\expand\DesktopDeployment_cab
@@ -92,7 +112,7 @@ create E:\expand
 
 - Scan an expanded directory
 ~~~shell
-PS S:\tools\windows_patch_extract> py -3 .\magic.py -scan e:\expand
+PS S:\tools\windows_patch_extract> magic-cli -scan e:\expand
 [INFO] Scanning e:\expand
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  --------------  -----  ------
 e:\expand\SSU-22621_378-x64_cab\amd64_microsoft-windows-s..-installers-onecore_31bf3856ad364e35_10.0.22621.378_none_4db921ab6e990364\appxprovisionpackage.dll                   10.0.22621.378  amd64  normal
@@ -106,7 +126,7 @@ e:\expand\SSU-22621_378-x64_cab\amd64_microsoft-windows-s..-installers-onecore_3
 
 - Extract a single file
 ~~~shell
-PS S:\tools\windows_patch_extract> py -3 .\magic.py -extract sxssrv.dll amd64 e:\expand
+PS S:\tools\windows_patch_extract> magic-cli -extract sxssrv.dll amd64 e:\expand
 [INFO] Scanning e:\expand
 [INFO] Using cached result
 [INFO] Forward file found at E:\expand\Windows10_0-KB5018418-x64_cab\amd64_microsoft-windows-sxssrv_31bf3856ad364e35_10.0.22000.1098_none_d9d9980beec843d4\f\sxssrv.dll
@@ -120,7 +140,7 @@ PS S:\tools\windows_patch_extract> py -3 .\magic.py -extract sxssrv.dll amd64 e:
 
 - Extract 2 files for diffing in IDA
 ~~~shell
-PS S:\tools\windows_patch_extract> py -3 .\magic.py -diff vmemulateddevices.dll amd64 E:\expand\
+PS S:\tools\windows_patch_extract> magic-cli -diff vmemulateddevices.dll amd64 E:\expand\
 [INFO] Using platform amd64
 [INFO] Scanning E:\expand\
 [INFO] Forward file found at E:\expand\Windows10_0-KB5018418-x64_cab\amd64_hyperv-vmemulateddevices_31bf3856ad364e35_10.0.22000.1042_none_25945f084ac0858f\f\vmemulateddevices.dll
