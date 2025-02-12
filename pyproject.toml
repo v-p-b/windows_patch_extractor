@@ -1,0 +1,14 @@
+[project]
+name = "windows_patch_extractor"
+version = "2025.2.0"
+requires-python = "< 3.11, >= 3.0"
+dependencies = [
+  "requests",
+  "termcolor",
+  "tabulate",
+  "tqdm"
+]
+
+[project.scripts]
+magic-cli = "magic:main_cli"
+

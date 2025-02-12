@@ -535,7 +535,7 @@ SCAN_FILE_NAME = 'scan.pkl'
 def scan_file_exists(dir: str):
     return os.path.exists(os.path.join(dir, SCAN_FILE_NAME))
 
-if __name__ == '__main__':
+def main_cli():
     action = sys.argv[1]
 
     if action == '-expand':
@@ -643,4 +643,8 @@ if __name__ == '__main__':
     else:
         print_error(f'invalid action: {action}')
 
-        
+ 
+
+if __name__ == '__main__':
+    main_cli()
+       
