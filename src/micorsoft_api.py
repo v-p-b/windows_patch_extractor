@@ -87,10 +87,10 @@ def is_same_os(a, b):
 def get_build_number():
     k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\Windows NT\CurrentVersion')
 
-    major = winreg.QueryValueEx(k, 'CurrentMajorVersionNumber')
-    minor = winreg.QueryValueEx(k, 'CurrentMinorVersionNumber')
-    build_number = winreg.QueryValueEx(k, 'CurrentBuildNumber')
-    ubr = winreg.QueryValueEx(k, 'UBR')
+    major = winreg.QueryValueEx(k, 'CurrentMajorVersionNumber')[0]
+    minor = winreg.QueryValueEx(k, 'CurrentMinorVersionNumber')[0]
+    build_number = winreg.QueryValueEx(k, 'CurrentBuildNumber')[0]
+    ubr = winreg.QueryValueEx(k, 'UBR')[0]
 
     return f'{major}.{minor}.{build_number}.{ubr}'
 
